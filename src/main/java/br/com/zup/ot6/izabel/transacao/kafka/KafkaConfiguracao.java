@@ -14,6 +14,8 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
+import br.com.zup.ot6.izabel.transacao.dto.TransacaoMessageDTO;
+
 
 @Configuration
 public class KafkaConfiguracao {
@@ -36,15 +38,15 @@ public class KafkaConfiguracao {
     }
 
     @Bean
-    public ConsumerFactory<String, Transacao> produtorTransacaoConsumidor() {
+    public ConsumerFactory<String, TransacaoMessageDTO> produtorTransacaoConsumidor() {
         StringDeserializer stringDesserializador = new StringDeserializer();
-        JsonDeserializer<Transacao> jsonDesserializador = new JsonDeserializer<>(Transacao.class, false);
+        JsonDeserializer<TransacaoMessageDTO> jsonDesserializador = new JsonDeserializer<>(TransacaoMessageDTO.class, false);
         return new DefaultKafkaConsumerFactory<>(configuracoesConsumidor(), stringDesserializador, jsonDesserializador);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Transacao> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Transacao> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, TransacaoMessageDTO> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, TransacaoMessageDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(produtorTransacaoConsumidor());
         return factory;
     }

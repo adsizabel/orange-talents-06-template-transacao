@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.zup.ot6.izabel.transacao.entidades.Estabelecimento;
 
-public class EstabelecimentoResponse {
-	
+public class EstabelecimentoMensagemDTO {
+
 	@JsonProperty("nome")
 	private String nome;
 	@JsonProperty("cidade")
@@ -14,21 +14,27 @@ public class EstabelecimentoResponse {
 	private String endereco;
 	
 	@Deprecated
-	public EstabelecimentoResponse() {}
+	public EstabelecimentoMensagemDTO() {}
 	
-	public EstabelecimentoResponse(Estabelecimento estabelecimento) {
+	public EstabelecimentoMensagemDTO(String nome, String cidade, String endereco) {
 		super();
-		this.nome = estabelecimento.getNome();
-		this.cidade = estabelecimento.getCidade();
-		this.endereco = estabelecimento.getEndereco();
+		this.nome = nome;
+		this.cidade = cidade;
+		this.endereco = endereco;
+	}
+	
+	public Estabelecimento converterParaEntidade() {
+		return new Estabelecimento(nome, cidade, endereco);
 	}
 
 	public String getNome() {
 		return nome;
 	}
+
 	public String getCidade() {
 		return cidade;
 	}
+
 	public String getEndereco() {
 		return endereco;
 	}
